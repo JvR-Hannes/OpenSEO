@@ -1,8 +1,20 @@
 import type { CheerioAPI } from "cheerio";
 
 export type AuditStatus = "pass" | "info" | "warning" | "fail";
+
 export type Severity = "info" | "warning" | "error" | "critical";
-export type SeoCategory = "Technical SEO" | "On-page SEO" | "Social" | "Accessibility";
+
+export type SeoCategory =
+  | "Technical SEO"
+  | "On-page SEO"
+  | "Social"
+  | "Accessibility";
+
+export type RedirectHop = {
+  from: string;
+  to: string;
+  statusCode: number;
+};
 
 export type PageData = {
   url: string;
@@ -11,6 +23,7 @@ export type PageData = {
   statusCode: number;
   contentType: string;
   responseHeaders: Record<string, string>;
+  redirects: RedirectHop[];
 };
 
 export type RobotsData = {
