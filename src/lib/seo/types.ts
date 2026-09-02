@@ -18,12 +18,18 @@ export type RedirectHop = {
 
 export type PageData = {
   url: string;
+  requestedUrl: string;
   html: string;
   $: CheerioAPI;
   statusCode: number;
   contentType: string;
   responseHeaders: Record<string, string>;
-  redirects: RedirectHop[];
+
+  redirect: {
+    occurred: boolean;
+    chain: string[];
+    count: number;
+  };
 };
 
 export type RobotsData = {
