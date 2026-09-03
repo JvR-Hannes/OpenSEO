@@ -141,43 +141,64 @@ function AuditResults({ report }: { report: AuditReport }) {
 function AuditResultCard({ result }: { result: AuditResult }) {
   return (
     <article className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+      {" "}
       <div className="flex gap-4">
-        <StatusIcon status={result.status} />
-
+        {" "}
+        <StatusIcon status={result.status} />{" "}
         <div className="min-w-0 flex-1">
+          {" "}
           <div className="flex flex-wrap items-center gap-2">
-            <h4 className="font-semibold">{result.name}</h4>
-            <SeverityBadge severity={result.severity} />
+            {" "}
+            <h4 className="font-semibold">{result.name}</h4>{" "}
+            <ResultBadge result={result} />{" "}
             <span className="text-xs text-neutral-600">
-              {result.weight} pts
-            </span>
-          </div>
-
+              {" "}
+              {result.weight} pts{" "}
+            </span>{" "}
+          </div>{" "}
           <p className="mt-2 text-sm leading-6 text-neutral-400">
-            {result.message}
-          </p>
-
+            {" "}
+            {result.message}{" "}
+          </p>{" "}
           {result.explanation && (
             <div className="mt-4 rounded-lg border border-neutral-800 bg-neutral-900/50 p-4">
+              {" "}
               <p className="text-xs font-semibold uppercase tracking-wider text-neutral-500">
-                Why this matters
-              </p>
+                {" "}
+                Why this matters{" "}
+              </p>{" "}
               <p className="mt-2 text-sm leading-6 text-neutral-300">
-                {result.explanation}
-              </p>
+                {" "}
+                {result.explanation}{" "}
+              </p>{" "}
             </div>
-          )}
-
+          )}{" "}
           {result.suggestion && (
             <div className="mt-3 rounded-lg bg-neutral-900 p-4 text-sm text-neutral-300">
-              <span className="font-semibold text-white">Fix: </span>
-              {result.suggestion}
+              {" "}
+              <span className="font-semibold text-white">Fix: </span>{" "}
+              {result.suggestion}{" "}
             </div>
-          )}
-        </div>
-      </div>
+          )}{" "}
+        </div>{" "}
+      </div>{" "}
     </article>
   );
+}
+
+function ResultBadge({ result }: { result: AuditResult }) {
+  if (result.status === "pass") {
+    return null;
+  }
+  if (result.status === "info") {
+    return (
+      <span className="rounded-full border border-neutral-800 px-2 py-0.5 text-[11px] text-neutral-500">
+        {" "}
+        Info{" "}
+      </span>
+    );
+  }
+  return <SeverityBadge severity={result.severity} />;
 }
 
 function SummaryCard({ label, value }: { label: string; value: number }) {
