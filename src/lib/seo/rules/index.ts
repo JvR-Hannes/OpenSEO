@@ -10,5 +10,6 @@ import { viewportRule } from "./viewport";
 import { robotsRule } from "./robots";
 import { sitemapRule } from "./sitemap";
 import { redirectChainRule } from "./redirect-chain";
+import { finalUrlIntegrityRule } from "./final-url-integrity";
 
-export const seoRules: SeoRule[] = [redirectChainRule,indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];
+export const seoRules: SeoRule[] = [redirectChainRule, finalUrlIntegrityRule, indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];
