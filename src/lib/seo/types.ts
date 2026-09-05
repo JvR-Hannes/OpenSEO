@@ -66,6 +66,7 @@ export type RuleCheckResult = {
   message: string;
   explanation?: string;
   suggestion?: string;
+  details?: string[];
   severity?: Severity;
 };
 
