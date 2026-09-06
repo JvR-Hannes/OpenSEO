@@ -12,5 +12,6 @@ import { sitemapRule } from "./sitemap";
 import { redirectChainRule } from "./redirect-chain";
 import { finalUrlIntegrityRule } from "./final-url-integrity";
 import { httpResponseRule } from "./http-response";
+import { internalLinksRule } from "./internal-links";
 
-export const seoRules: SeoRule[] = [httpResponseRule, redirectChainRule, finalUrlIntegrityRule, indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];
+export const seoRules: SeoRule[] = [httpResponseRule, redirectChainRule, finalUrlIntegrityRule, internalLinksRule, indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];

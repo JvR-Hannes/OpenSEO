@@ -230,7 +230,7 @@ function StatusIcon({ status }: { status: AuditStatus }) {
 function SeverityBadge({ severity }: { severity: Severity }) {
   return (
     <span className="rounded-full border border-neutral-800 px-2 py-0.5 text-[11px] capitalize text-neutral-500">
-      {severity}
+      {severity.charAt(0).toUpperCase() + severity.slice(1)}
     </span>
   );
 }
