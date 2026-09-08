@@ -35,6 +35,7 @@ export async function runSeoAudit(url: string): Promise<AuditReport> {
       message: checked.message,
       explanation: checked.explanation,
       suggestion: checked.suggestion,
+      details: checked.details,
     };
   });
 
