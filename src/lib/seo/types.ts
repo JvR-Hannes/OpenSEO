@@ -1,5 +1,6 @@
 import type { CheerioAPI } from "cheerio";
 import { InternalLinkCheck } from "./crawler/check-internal-links";
+import { ExternalLinkCheck } from "./crawler/check-external-links";
 
 export type AuditStatus = "pass" | "info" | "warning" | "fail";
 
@@ -18,6 +19,12 @@ export type RedirectHop = {
 };
 
 export type InternalLink = {
+  href: string;
+  url: string;
+  text: string;
+};
+
+export type ExternalLink = {
   href: string;
   url: string;
   text: string;
@@ -67,6 +74,7 @@ export type AuditContext = {
   sitemap: SitemapData;
   links: InternalLink[];
   internalLinkChecks: InternalLinkCheck[];
+  externalLinkChecks: ExternalLinkCheck[];
 };
 
 export type RuleCheckResult = {
