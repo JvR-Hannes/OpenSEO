@@ -30,6 +30,13 @@ export type ExternalLink = {
   text: string;
 };
 
+export type StructuredDataBlock = {
+  raw: string;
+  valid: boolean;
+  types: string[];
+  error?: string;
+};
+
 export type PageData = {
   url: string;
   requestedUrl: string;
@@ -75,6 +82,7 @@ export type AuditContext = {
   links: InternalLink[];
   internalLinkChecks: InternalLinkCheck[];
   externalLinkChecks: ExternalLinkCheck[];
+  structuredData: StructuredDataBlock[];
 };
 
 export type RuleCheckResult = {
