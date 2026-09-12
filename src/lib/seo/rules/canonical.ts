@@ -29,13 +29,74 @@ export const canonicalRule: SeoRule = {
         message: `Found ${canonicals.length} canonical link elements.`,
         explanation:
           "Multiple canonical declarations can create conflicting signals about the preferred URL.",
-        suggestion: "Keep one canonical URL per page.",
+        suggestion:
+          "Keep one canonical URL per page.",
+      };
+    }
+
+    let canonicalUrl: URL;
+
+    try {
+      canonicalUrl = new URL(href, page.url);
+    } catch {
+      return {
+        status: "fail",
+        severity: "error",
+        message: "The canonical URL is invalid.",
+        explanation:
+          "The canonical href could not be resolved into a valid HTTP or HTTPS URL.",
+        details: [`Canonical: ${href}`],
+        suggestion:
+          "Use a valid absolute or page-relative canonical URL.",
+      };
+    }
+
+    if (
+      canonicalUrl.protocol !== "http:" &&
+      canonicalUrl.protocol !== "https:"
+    ) {
+      return {
+        status: "fail",
+        severity: "error",
+        message: "The canonical URL does not use HTTP or HTTPS.",
+        explanation:
+          "Canonical URLs should resolve to publicly accessible HTTP or HTTPS resources.",
+        details: [`Canonical: ${canonicalUrl.toString()}`],
+        suggestion:
+          "Use an HTTP or HTTPS canonical URL.",
+      };
+    }
+
+    if (canonicalUrl.hash) {
+      return {
+        status: "warning",
+        message: "The canonical URL contains a fragment.",
+        explanation:
+          "URL fragments identify a location within a document and are generally not appropriate for canonical URL declarations.",
+        details: [`Canonical: ${canonicalUrl.toString()}`],
+        suggestion:
+          "Remove the URL fragment from the canonical URL.",
+      };
+    }
+
+    if (canonicalUrl.origin !== new URL(page.url).origin) {
+      return {
+        status: "warning",
+        message: "The canonical URL points to a different origin.",
+        explanation:
+          "Cross-origin canonicals can be intentional, but they should only be used when the page is deliberately canonicalized to another site.",
+        details: [
+          `Page: ${page.url}`,
+          `Canonical: ${canonicalUrl.toString()}`,
+        ],
+        suggestion:
+          "Verify that the cross-origin canonical is intentional.",
       };
     }
 
     return {
       status: "pass",
-      message: `Canonical found: ${href}`,
+      message: `Canonical found: ${canonicalUrl.toString()}`,
     };
   },
 };
