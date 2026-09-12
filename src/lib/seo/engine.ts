@@ -6,6 +6,8 @@ import { checkInternalLinks } from "./crawler/check-internal-links";
 import { extractExternalLinks } from "./crawler/extract-external-links";
 import { checkExternalLinks } from "./crawler/check-external-links";
 import { extractStructuredData } from "./crawler/extract-structured.data";
+import { extractImageResources } from "./crawler/extract-image-resources";
+import { checkImageResources } from "./crawler/check-image-resources";
 import { seoRules } from "./rules";
 import { calculateScore, createSummary } from "./scoring";
 import type { AuditReport, AuditResult } from "./types";
@@ -19,6 +21,8 @@ export async function runSeoAudit(url: string): Promise<AuditReport> {
   const externalLinks = extractExternalLinks(page);
   const externalLinkChecks = await checkExternalLinks(externalLinks);
   const structuredData = extractStructuredData(page);
+  const imageResources = extractImageResources(page);
+  const imageResourceChecks = await checkImageResources(imageResources);
 
   const context = {
     page,
@@ -28,6 +32,7 @@ export async function runSeoAudit(url: string): Promise<AuditReport> {
     internalLinkChecks,
     externalLinkChecks,
     structuredData,
+    imageResourceChecks,
   };
 
   const results: AuditResult[] = seoRules.map((rule) => {

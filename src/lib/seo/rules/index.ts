@@ -15,5 +15,6 @@ import { httpResponseRule } from "./http-response";
 import { internalLinksRule } from "./internal-links";
 import { externalLinksRule } from "./external-links";
 import { structuredDataRule } from "./structured-data";
+import { imageResourcesRule } from "./image-resources";
 
-export const seoRules: SeoRule[] = [httpResponseRule, redirectChainRule, finalUrlIntegrityRule, internalLinksRule, externalLinksRule, structuredDataRule, indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];
+export const seoRules: SeoRule[] = [httpResponseRule, redirectChainRule, finalUrlIntegrityRule, internalLinksRule, externalLinksRule, structuredDataRule, imageResourcesRule, indexabilityRule, titleRule, metaDescriptionRule, h1Rule, canonicalRule, openGraphRule, imageAltRule, viewportRule, robotsRule, sitemapRule];

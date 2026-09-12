@@ -1,6 +1,7 @@
 import type { CheerioAPI } from "cheerio";
 import { InternalLinkCheck } from "./crawler/check-internal-links";
 import { ExternalLinkCheck } from "./crawler/check-external-links";
+import { ImageResourceCheck } from "./crawler/check-image-resources";
 
 export type AuditStatus = "pass" | "info" | "warning" | "fail";
 
@@ -83,6 +84,7 @@ export type AuditContext = {
   internalLinkChecks: InternalLinkCheck[];
   externalLinkChecks: ExternalLinkCheck[];
   structuredData: StructuredDataBlock[];
+  imageResourceChecks: ImageResourceCheck[];
 };
 
 export type RuleCheckResult = {
