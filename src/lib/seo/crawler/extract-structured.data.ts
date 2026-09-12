@@ -21,13 +21,15 @@ export function extractStructuredData(
 
     try {
       const parsed = JSON.parse(raw);
-      const types = extractTypes(parsed);
+const types = extractTypes(parsed);
+const context = extractContext(parsed);
 
-      blocks.push({
-        raw,
-        valid: true,
-        types,
-      });
+blocks.push({
+  raw,
+  valid: true,
+  types,
+  context,
+});
     } catch (error) {
       blocks.push({
         raw,
@@ -74,4 +76,30 @@ function extractTypes(value: unknown): string[] {
   }
 
   return [...new Set(types)];
+}
+
+function extractContext(value: unknown): string | undefined {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const context = extractContext(item);
+
+      if (context) {
+        return context;
+      }
+    }
+
+    return undefined;
+  }
+
+  if (!value || typeof value !== "object") {
+    return undefined;
+  }
+
+  const object = value as Record<string, unknown>;
+
+  if (typeof object["@context"] === "string") {
+    return object["@context"];
+  }
+
+  return undefined;
 }

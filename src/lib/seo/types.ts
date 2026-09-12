@@ -35,6 +35,7 @@ export type StructuredDataBlock = {
   raw: string;
   valid: boolean;
   types: string[];
+  context?: string;
   error?: string;
 };
 

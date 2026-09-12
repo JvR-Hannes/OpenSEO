@@ -49,6 +49,10 @@ export const structuredDataRule: SeoRule = {
       ),
     ];
 
+    const missingContextBlocks = validBlocks.filter(
+      (block) => !block.context,
+    );
+
     if (types.length === 0) {
       return {
         status: "warning",
@@ -63,6 +67,24 @@ export const structuredDataRule: SeoRule = {
           "Add an appropriate Schema.org @type to describe the content represented by the structured data.",
       };
     }
+
+    if (missingContextBlocks.length > 0) {
+  return {
+    status: "warning",
+    message: `${missingContextBlocks.length} ${
+      missingContextBlocks.length === 1
+        ? "structured data block is"
+        : "structured data blocks are"
+    } missing an @context.`,
+    explanation:
+      "JSON-LD structured data should declare its vocabulary context so consumers can correctly interpret its properties and types.",
+    suggestion:
+      "Add an appropriate @context, normally https://schema.org, to the affected JSON-LD blocks.",
+    details: missingContextBlocks.map(
+      (_, index) => `Block ${index + 1}: @context is missing.`,
+    ),
+  };
+}
 
     return {
       status: "pass",
