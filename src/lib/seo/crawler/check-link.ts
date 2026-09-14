@@ -1,3 +1,5 @@
+import { validateUrl } from "./validate-url";
+
 export type LinkCheckResult = {
   url: string;
   statusCode: number | null;
@@ -16,6 +18,8 @@ export async function checkLink(url: string): Promise<LinkCheckResult> {
   let redirectCount = 0;
 
   try {
+    await validateUrl(currentUrl);
+
     while (redirectCount <= MAX_REDIRECTS) {
       const response = await fetch(currentUrl, {
         headers: {
@@ -35,8 +39,13 @@ export async function checkLink(url: string): Promise<LinkCheckResult> {
         Boolean(location);
 
       if (isRedirect && location) {
-        currentUrl = new URL(location, currentUrl).toString();
+        const nextUrl = new URL(location, currentUrl).toString();
+
+        await validateUrl(nextUrl);
+
+        currentUrl = nextUrl;
         redirectCount++;
+
         continue;
       }
 

@@ -1,11 +1,14 @@
 import * as cheerio from "cheerio";
 import type { PageData } from "../types";
+import { validateUrl } from "./validate-url";
 
 const MAX_HTML_BYTES = 2_000_000;
 const TIMEOUT_MS = 15_000;
 const MAX_REDIRECTS = 10;
 
 export async function fetchPage(url: string): Promise<PageData> {
+
+  const validatedUrl = await validateUrl(url);
   const requestedUrl = url;
   const redirectChain: string[] = [];
 
@@ -31,6 +34,8 @@ export async function fetchPage(url: string): Promise<PageData> {
 
     if (isRedirect && location) {
       const nextUrl = new URL(location, currentUrl).toString();
+
+      await validateUrl(nextUrl);
 
       redirectChain.push(nextUrl);
 
