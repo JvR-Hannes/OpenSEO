@@ -26,4 +26,22 @@ it("handles request timeouts", async () => {
   vi.restoreAllMocks();
 });
 
+it("rejects HTML documents that exceed the size limit", async () => {
+  const oversizedHtml = "x".repeat(2_000_001);
+
+  vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+    new Response(oversizedHtml, {
+      status: 200,
+      headers: {
+        "content-type": "text/html",
+      },
+    }),
+  );
+
+  await expect(fetchPage("https://example.com")).rejects.toThrow(
+    "The HTML document is too large to audit.",
+  );
+
+  vi.restoreAllMocks();
+});
 });
