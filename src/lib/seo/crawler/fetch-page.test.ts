@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { fetchPage } from "./fetch-page";
 
 describe("fetchPage", () => {
@@ -15,4 +15,15 @@ describe("fetchPage", () => {
     fetchPage("https://httpbin.org/redirect/11"),
   ).rejects.toThrow("Too many redirects");
 });
+
+it("handles request timeouts", async () => {
+  vi.spyOn(globalThis, "fetch").mockRejectedValueOnce(
+    new DOMException("The operation was aborted.", "TimeoutError"),
+  );
+
+  await expect(fetchPage("https://example.com")).rejects.toThrow();
+
+  vi.restoreAllMocks();
+});
+
 });
